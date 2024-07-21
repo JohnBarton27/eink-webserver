@@ -18,6 +18,8 @@ app = FastAPI()
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+EINK_MODEL = 'epd7in5b_V2'
+
 @app.post("/upload")
 async def upload_bmp(file: UploadFile = File(...)):
     file_location = os.path.join(UPLOAD_DIR, file.filename)
@@ -25,7 +27,7 @@ async def upload_bmp(file: UploadFile = File(...)):
         shutil.copyfileobj(file.file, buffer)
     
     try:
-        epd = epaper.epaper('epd7in5b_V2').EPD()  # epd7in5b_V2
+        epd = epaper.epaper(EINK_MODEL).EPD()  
         logging.info("init and Clear")
         epd.init()
         # epd.Clear()
@@ -40,7 +42,7 @@ async def upload_bmp(file: UploadFile = File(...)):
         
     except KeyboardInterrupt:    
         logging.info("ctrl + c:")
-        epaper.epaper('epd7in5b_V2').epdconfig.module_exit()
+        epaper.epaper(EINK_MODEL).epdconfig.module_exit()
         exit()
 
 
