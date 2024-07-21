@@ -1,0 +1,7 @@
+fastapi
+gpiozero
+lgpio
+pillow
+RPi.GPIO
+spidev
+waveshare-epaper
